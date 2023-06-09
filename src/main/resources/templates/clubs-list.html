@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thmyelead.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:each="club : ${clubs}">
+        <img th:src="${club.imageUrl}" th:alt="${club.title}"/>
+        <p th:text="${club.title}"></p>
+        <a th:href="@{/clubs/edit/{id}(id=${club.id})}">Edit</a>
+    </div>
+</body>
+</html>
