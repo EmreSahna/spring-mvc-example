@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,4 +64,23 @@ public class ClubController {
         return "redirect:/clubs";
     }
 
+    @GetMapping("/clubs/{id}")
+    public String getClub(@PathVariable("id") Long id, Model model){
+        ClubDto club = clubService.findById(id);
+        model.addAttribute("club", club);
+        return "clubs-view";
+    }
+
+    @GetMapping("/clubs/delete/{id}")
+    public String deleteClub(@PathVariable("id") Long id){
+        clubService.deleteClub(id);
+        return "redirect:/clubs";
+    }
+
+    @GetMapping("/clubs/search")
+    public String searchClubs(@RequestParam("query") String query, Model model){
+        List<ClubDto> clubs = clubService.searchClubs(query);
+        model.addAttribute("clubs", clubs);
+        return "clubs-list";
+    }
 }

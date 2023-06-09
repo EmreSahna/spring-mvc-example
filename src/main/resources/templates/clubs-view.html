@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thmyelead.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <img th:src="${club.imageUrl}" th:alt="${club.title}"/>
+    <p th:text="${club.title}"></p>
+    <p th:text="${club.content}"></p>
+    <span th:text="${club.createdOn}"></span>
+    <span th:text="${club.updatedOn}"></span>
+    <a th:href="@{/clubs/delete/{id}(id=${club.id})}">Delete</a>
+</div>
+</body>
+</html>
