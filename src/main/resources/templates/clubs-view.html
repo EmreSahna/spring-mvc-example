@@ -17,9 +17,8 @@
     <div th:each = "event : ${club.events}">
         <img th:src="${event.photoUrl}" th:alt="${event.name}"/>
         <p th:text="${event.name}"></p>
-        <p th:text="${event.type}"></p>
-        <span th:text="${event.startTime}"></span>
-        <span th:text="${event.endTime}"></span>
+        <a th:href="@{/events/{id}(id=${event.id})}">View</a>
+        <a th:href="@{/events/delete/{id}(id=${event.id})}">Delete</a>
     </div>
 </div>
 </body>
