@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thmyelead.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Create</title>
+</head>
+<body>
+<form role="form" method="post" th:action="@{/events/{clubId}(clubId=${clubId})}" th:object="${event}">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" th:field="*{name}"/>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+  </div>
+  <div>
+    <label for="type">Type</label>
+    <input type="text" id="type" name="type" th:field="*{type}"/>
+    <p th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+  </div>
+  <div>
+    <label for="photoUrl">Photo Url</label>
+    <input type="text" id="photoUrl" name="photoUrl" th:field="*{photoUrl}"/>
+    <p th:if="${#fields.hasErrors('photoUrl')}" th:errors="*{photoUrl}"></p>
+  </div>
+  <div>
+    <label for="startTime">Start Time</label>
+    <input type="datetime-local" id="startTime" name="startTime" th:field="*{startTime}"/>
+    <p th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></p>
+  </div>
+  <div>
+    <label for="endTime">End Time</label>
+    <input type="datetime-local" id="endTime" name="endTime" th:field="*{endTime}"/>
+    <p th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}"></p>
+  </div>
+
+  <div>
+    <input type="submit" value="Create"/>
+  </div>
+</form>
+</body>
+</html>

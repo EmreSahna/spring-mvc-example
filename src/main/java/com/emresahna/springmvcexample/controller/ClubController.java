@@ -45,7 +45,7 @@ public class ClubController {
 
     @GetMapping("/clubs/edit/{id}")
     public String editClubForm(@PathVariable("id") Long id, Model model){
-        ClubDto club = clubService.findById(id);
+        ClubDto club = clubService.findClubDtoById(id);
         model.addAttribute("club", club);
         return "clubs-edit";
     }
@@ -66,7 +66,7 @@ public class ClubController {
 
     @GetMapping("/clubs/{id}")
     public String getClub(@PathVariable("id") Long id, Model model){
-        ClubDto club = clubService.findById(id);
+        ClubDto club = clubService.findClubDtoById(id);
         model.addAttribute("club", club);
         return "clubs-view";
     }

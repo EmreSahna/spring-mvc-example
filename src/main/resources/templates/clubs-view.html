@@ -12,6 +12,15 @@
     <span th:text="${club.createdOn}"></span>
     <span th:text="${club.updatedOn}"></span>
     <a th:href="@{/clubs/delete/{id}(id=${club.id})}">Delete</a>
+    <a th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+
+    <div th:each = "event : ${club.events}">
+        <img th:src="${event.photoUrl}" th:alt="${event.name}"/>
+        <p th:text="${event.name}"></p>
+        <p th:text="${event.type}"></p>
+        <span th:text="${event.startTime}"></span>
+        <span th:text="${event.endTime}"></span>
+    </div>
 </div>
 </body>
 </html>
