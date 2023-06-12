@@ -31,4 +31,8 @@ public class Club {
 
     @OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
     private List<Event> events;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 }

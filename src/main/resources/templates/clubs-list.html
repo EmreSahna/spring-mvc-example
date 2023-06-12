@@ -5,6 +5,9 @@
     <title>Find Clubs</title>
 </head>
 <body>
+    <div th:if="${param.success}">
+        You have been registered successfully!
+    </div>
     <div>
         <a th:href="@{/clubs/add}">Create</a>
         <form th:action="@{/clubs/search}" method="get">
@@ -16,7 +19,9 @@
         <img th:src="${club.imageUrl}" th:alt="${club.title}"/>
         <p th:text="${club.title}"></p>
         <a th:href="@{/clubs/{id}(id=${club.id})}">View</a>
-        <a th:href="@{/clubs/edit/{id}(id=${club.id})}">Edit</a>
+        <div th:if="${user.id} == ${club.createdBy.id}">
+            <a th:href="@{/clubs/edit/{id}(id=${club.id})}">Edit</a>
+        </div>
     </div>
 </body>
 </html>

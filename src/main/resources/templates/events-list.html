@@ -10,7 +10,9 @@
     <img th:src="${event.photoUrl}" th:alt="${event.name}"/>
     <p th:text="${event.name}"></p>
     <a th:href="@{/events/{id}(id=${event.id})}">View</a>
-    <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+    <div th:if="${user.id} == ${event.club.createdBy.id}">
+        <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+    </div>
 </div>
 </body>
 </html>

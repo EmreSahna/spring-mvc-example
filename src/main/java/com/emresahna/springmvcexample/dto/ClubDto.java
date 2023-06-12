@@ -1,5 +1,6 @@
 package com.emresahna.springmvcexample.dto;
 
+import com.emresahna.springmvcexample.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class ClubDto {
     private String imageUrl;
     @NotEmpty(message = "Content cannot be null")
     private String content;
+    private User createdBy;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
     private List<EventDto> events;

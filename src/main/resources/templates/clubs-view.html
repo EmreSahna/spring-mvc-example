@@ -11,14 +11,18 @@
     <p th:text="${club.content}"></p>
     <span th:text="${club.createdOn}"></span>
     <span th:text="${club.updatedOn}"></span>
-    <a th:href="@{/clubs/delete/{id}(id=${club.id})}">Delete</a>
-    <a th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+    <div th:if="${user.id} == ${club.createdBy.id}">
+        <a th:href="@{/clubs/delete/{id}(id=${club.id})}">Delete</a>
+        <a th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+    </div>
 
     <div th:each = "event : ${club.events}">
         <img th:src="${event.photoUrl}" th:alt="${event.name}"/>
         <p th:text="${event.name}"></p>
         <a th:href="@{/events/{id}(id=${event.id})}">View</a>
-        <a th:href="@{/events/delete/{id}(id=${event.id})}">Delete</a>
+        <div th:if="${user.id} == ${club.id}">
+            <a th:href="@{/events/delete/{id}(id=${event.id})}">Delete</a>
+        </div>
     </div>
 </div>
 </body>

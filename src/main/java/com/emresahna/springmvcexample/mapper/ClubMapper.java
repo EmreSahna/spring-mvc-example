@@ -12,6 +12,7 @@ public class ClubMapper {
                 .title(club.getTitle())
                 .imageUrl(club.getImageUrl())
                 .content(club.getContent())
+                .createdBy(club.getCreatedBy())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
                 .events(club.getEvents().stream().map(EventMapper::mapToEventDto).collect(Collectors.toList()))
