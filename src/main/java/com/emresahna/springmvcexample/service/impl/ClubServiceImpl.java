@@ -3,8 +3,12 @@ package com.emresahna.springmvcexample.service.impl;
 import com.emresahna.springmvcexample.dto.ClubDto;
 import com.emresahna.springmvcexample.mapper.ClubMapper;
 import com.emresahna.springmvcexample.model.Club;
+import com.emresahna.springmvcexample.model.User;
 import com.emresahna.springmvcexample.repository.ClubRepository;
+import com.emresahna.springmvcexample.security.SecurityUtil;
 import com.emresahna.springmvcexample.service.ClubService;
+import com.emresahna.springmvcexample.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +20,11 @@ import static com.emresahna.springmvcexample.mapper.ClubMapper.mapToClubDto;
 @Service
 public class ClubServiceImpl implements ClubService {
     private final ClubRepository clubRepository;
+    private final UserService userService;
 
-    public ClubServiceImpl(ClubRepository clubRepository) {
+    public ClubServiceImpl(ClubRepository clubRepository, UserService userService) {
         this.clubRepository = clubRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -29,6 +35,9 @@ public class ClubServiceImpl implements ClubService {
     @Override
     public void saveClub(ClubDto clubDto) {
         Club club = mapToClub(clubDto);
+        Authentication authentication = SecurityUtil.getSession();
+        User user = userService.findByUsername(authentication.getName());
+        club.setCreatedBy(user);
         clubRepository.save(club);
     }
 

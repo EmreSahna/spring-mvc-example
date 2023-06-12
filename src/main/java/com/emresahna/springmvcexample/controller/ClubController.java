@@ -2,7 +2,10 @@ package com.emresahna.springmvcexample.controller;
 
 import com.emresahna.springmvcexample.dto.ClubDto;
 import com.emresahna.springmvcexample.model.Club;
+import com.emresahna.springmvcexample.model.User;
+import com.emresahna.springmvcexample.security.SecurityUtil;
 import com.emresahna.springmvcexample.service.ClubService;
+import com.emresahna.springmvcexample.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +17,22 @@ import java.util.List;
 @Controller
 public class ClubController {
     private final ClubService clubService;
+    private final UserService userService;
 
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, UserService userService) {
         this.clubService = clubService;
+        this.userService = userService;
     }
 
     @GetMapping("/clubs")
     public String getClubs(Model model){
+        User user = new User();
         List<ClubDto> clubs = clubService.findAll();
+        String username = SecurityUtil.getSession().getName();
+        if(username != null){
+            user = userService.findByUsername(SecurityUtil.getSession().getName());
+        }
+        model.addAttribute("user", user);
         model.addAttribute("clubs", clubs);
         return "clubs-list";
     }
@@ -66,7 +77,13 @@ public class ClubController {
 
     @GetMapping("/clubs/{id}")
     public String getClub(@PathVariable("id") Long id, Model model){
+        User user = new User();
         ClubDto club = clubService.findClubDtoById(id);
+        String username = SecurityUtil.getSession().getName();
+        if(username != null){
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("club", club);
         return "clubs-view";
     }

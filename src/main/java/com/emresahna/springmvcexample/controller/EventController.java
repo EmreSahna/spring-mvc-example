@@ -1,9 +1,11 @@
 package com.emresahna.springmvcexample.controller;
 
-import com.emresahna.springmvcexample.dto.ClubDto;
 import com.emresahna.springmvcexample.dto.EventDto;
 import com.emresahna.springmvcexample.model.Event;
+import com.emresahna.springmvcexample.model.User;
+import com.emresahna.springmvcexample.security.SecurityUtil;
 import com.emresahna.springmvcexample.service.EventService;
+import com.emresahna.springmvcexample.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +20,36 @@ import java.util.List;
 @Controller
 public class EventController {
     private final EventService eventService;
+    private final UserService userService;
 
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping("/events")
     public String events(Model model) {
+        User user = new User();
         List<EventDto> events = eventService.findAllEvents();
+        String username = SecurityUtil.getSession().getName();
+        if(username != null) {
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("events", events);
         return "events-list";
     }
 
     @GetMapping("/events/{eventId}")
     public String eventsByClub(@PathVariable("eventId") Long eventId, Model model) {
+        User user = new User();
         EventDto event = eventService.findEventDtoById(eventId);
+        String username = SecurityUtil.getSession().getName();
+        if(username != null) {
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("club", event.getClub());
+        model.addAttribute("user", user);
         model.addAttribute("event", event);
         return "events-view";
     }
